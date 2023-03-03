@@ -1,10 +1,10 @@
 name: wonders
 description: Explore the famous wonders of the world.
-publish_to: "none"
-version: 2.0.11
+publish_to: 'none'
+version: 2.0.12
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: '>=2.17.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -58,11 +58,17 @@ dev_dependencies:
   json_serializable: ^6.3.1
   dart_code_metrics: ^4.17.1
   dependency_validator: ^3.0.0
+  patrol: ^1.0.5
+
+patrol:
+  app_name: Wonderous
+  android:
+    package_name: com.gskinner.flutter.wonders
 
 flutter_icons:
   ios: true
   android: true
-  image_path: "assets/marketing/app-icon-1024.png"
+  image_path: 'assets/marketing/app-icon-1024.png'
 
 flutter:
   uses-material-design: true
