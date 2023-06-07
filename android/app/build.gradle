@@ -83,6 +83,10 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    testOptions {
+        execution "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -96,5 +100,6 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.google.android.gms:play-services-maps:$maps_version"
-    androidTestUtil 'androidx.test:orchestrator:1.4.2'
+    testImplementation "junit:junit:4.13.2"
+    androidTestUtil "androidx.test:orchestrator:1.4.2"
 }

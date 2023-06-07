@@ -20,6 +20,9 @@ Future<void> swipeUntilVisible({
     await pumpAndMaybeSettle($: $);
     iterationsLeft -= 1;
   }
+  if (iterationsLeft <= 0) {
+    throw Exception('After trying to scroll to $finder, there was no such widget');
+  }
 }
 
 Future<void> pumpAndMaybeSettle({
@@ -27,14 +30,24 @@ Future<void> pumpAndMaybeSettle({
   Duration duration = const Duration(milliseconds: 100),
   Duration timeout = const Duration(seconds: 10),
 }) async {
-  int iteration = 100;
-  print('started pumpAndMaybeSettle');
-  while ($.tester.hasRunningAnimations && iteration > 0) {
-    await $.pump(Duration(milliseconds: 50));
-    iteration--;
-  }
-  if (iteration <= 0) {
-    print('pumpAndMaybeSettle timed out');
+  // int iteration = 100;
+  // print('started pumpAndMaybeSettle');
+  // while ($.tester.hasRunningAnimations && iteration > 0) {
+  //   await $.pump(Duration(milliseconds: 50));
+  //   iteration--;
+  // }
+  // if (iteration <= 0) {
+  //   print('pumpAndMaybeSettle timed out');
+  // }
+  try {
+    await $.tester.pumpAndSettle(duration, EnginePhase.sendSemanticsUpdate, timeout);
+  } catch (e) {
+    if (e is FlutterError && e.message == 'pumpAndSettle timed out') {
+      //dev.log(e.message);
+      print('time out');
+    } else {
+      rethrow;
+    }
   }
 }
 
@@ -51,34 +64,22 @@ Future<void> onboarding({
   required PatrolTester $,
 }) async {
   await $('Swipe left to continue').waitUntilVisible();
-  await swipeUntilVisible(
-    $: $,
-    finder: $(K.finishIntroButton)
-        .which<AnimatedOpacity>(
-          (button) => button.opacity == 1,
-        )
-        .$(CircleIconBtn),
-    view: $(Scrollable),
-    step: Offset(-300, 0),
-  );
+
   await $(K.finishIntroButton)
       .which<AnimatedOpacity>(
         (button) => button.opacity == 1,
       )
       .$(CircleIconBtn)
+      .scrollTo(step: 300)
       .tap();
   await $(K.hamburgerMenuButton).waitUntilVisible();
 }
 
-Future<void> openChichenItza({
+Future<void> openChitchenItza({
   required PatrolTester $,
 }) async {
-  await swipeUntilVisible(
-    $: $,
-    finder: $(K.wonderScreen(WonderType.chichenItza)),
-    view: $(Scrollable),
-    step: Offset(-300, 0),
-  );
-  await $(K.wonderScreen(WonderType.chichenItza)).tap(andSettle: false);
-  await pumpAndMaybeSettle($: $);
+  await $(K.wonderScreen(WonderType.chichenItza)).scrollTo(step: 300).tap(
+        settlePolicy: SettlePolicy.trySettle,
+        settleTimoeut: Duration(seconds: 2),
+      );
 }

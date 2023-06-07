@@ -823,11 +823,10 @@ packages:
   patrol:
     dependency: "direct dev"
     description:
-      name: patrol
-      sha256: a81546fbe25de76e9256e7340d1aa0e1603e6f7b0e4bb91b90a2e08e22992587
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
+      path: "/Users/julia/patrol/packages/patrol"
+      relative: false
+    source: path
+    version: "2.0.0-dev.1"
   petitparser:
     dependency: transitive
     description:

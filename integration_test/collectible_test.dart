@@ -10,21 +10,39 @@ void main() {
     'discover pendant collectible in chichen itza',
     nativeAutomation: true,
     framePolicy: LiveTestWidgetsFlutterBindingFramePolicy.benchmarkLive,
+    config: PatrolTesterConfig(settleTimeout: Duration(seconds: 3)),
     ($) async {
       await runWonderous($: $);
 
-      await onboarding($: $);
+      await $(K.finishIntroButton)
+          .which<AnimatedOpacity>(
+            (button) => button.opacity == 1,
+          )
+          .$(CircleIconBtn)
+          .scrollTo(step: 300)
+          .tap();
+      await $(K.hamburgerMenuButton).waitUntilVisible();
 
-      await openChichenItza($: $);
+      await $(K.wonderScreen(WonderType.chichenItza))
+          .scrollTo(
+            step: 300,
+          )
+          .tap(
+            settlePolicy: SettlePolicy.trySettle,
+          );
+
       await $(K.collectible(WonderType.chichenItza, 0))
           .scrollTo(
             scrollable: $(PageStorageKey('editorial')).$(Scrollable),
-            andSettle: false,
+            settlePolicy: SettlePolicy.noSettle,
           )
-          .tap(andSettle: false); // trzeba było dodać scrollable, bo inaczej hot restart nie działał w tym miejscu
-      await pumpAndMaybeSettle($: $);
+          .tap(
+            settlePolicy: SettlePolicy.trySettle,
+          );
       await $('VIEW IN MY COLLECTION').tap();
-      await $(K.collectibleDetails(WonderType.chichenItza, 'Pendant')).tap();
+      await $(K.collectibleDetails(WonderType.chichenItza, 'Pendant')).tap(
+        settleTimeout: Duration(seconds: 10),
+      );
       await $('Pendant').waitUntilVisible();
     },
   );
