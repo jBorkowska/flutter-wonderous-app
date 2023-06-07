@@ -10,20 +10,34 @@ void main() {
     'artifacts carousel',
     nativeAutomation: true,
     framePolicy: LiveTestWidgetsFlutterBindingFramePolicy.benchmarkLive,
+    config: PatrolTesterConfig(settleTimeout: Duration(seconds: 2)),
     ($) async {
       await runWonderous($: $);
 
-      await onboarding($: $);
+      await $('Swipe left to continue').waitUntilVisible();
 
-      await openChichenItza($: $);
-      await $(K.artifactsSectionButton).tap(andSettle: false);
-      await pumpAndMaybeSettle($: $);
-      await swipeUntilVisible(
-        $: $,
-        finder: $(K.artifact('Head of a Rain God')),
-        view: $(PageView).$(Scrollable),
-      );
-      await $(K.artifact('Head of a Rain God')).tap();
+      await $(K.finishIntroButton)
+          .which<AnimatedOpacity>(
+            (button) => button.opacity == 1,
+          )
+          .$(CircleIconBtn)
+          .scrollTo(step: 300)
+          .tap();
+      await $(K.hamburgerMenuButton).waitUntilVisible();
+
+      await $(K.wonderScreen(WonderType.chichenItza)).scrollTo(step: 300).tap(
+            settlePolicy: SettlePolicy.trySettle,
+            settleTimoeut: Duration(seconds: 2),
+          );
+
+      await $(K.artifactsSectionButton).tap(settlePolicy: SettlePolicy.trySettle);
+      await $(K.artifact('Head of a Rain God'))
+          .scrollTo(
+            scrollable: $(PageView).$(Scrollable),
+            step: 100,
+            settlePolicy: SettlePolicy.trySettle,
+          )
+          .tap(settlePolicy: SettlePolicy.trySettle);
     },
   );
 }
