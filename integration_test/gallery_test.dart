@@ -28,7 +28,7 @@ void main() {
           )
           .scrollTo(
             step: 200,
-            scrollable: $(EightWaySwipeDetector),
+            view: $(EightWaySwipeDetector),
             scrollDirection: AxisDirection.right,
             settlePolicy: SettlePolicy.trySettle,
           );
@@ -39,7 +39,7 @@ void main() {
           )
           .scrollTo(
             step: 200,
-            scrollable: $(EightWaySwipeDetector),
+            view: $(EightWaySwipeDetector),
             scrollDirection: AxisDirection.down,
             settlePolicy: SettlePolicy.trySettle,
           );
@@ -50,7 +50,7 @@ void main() {
           )
           .scrollTo(
             step: 200,
-            scrollable: $(EightWaySwipeDetector),
+            view: $(EightWaySwipeDetector),
             scrollDirection: AxisDirection.left,
             settlePolicy: SettlePolicy.trySettle,
           );

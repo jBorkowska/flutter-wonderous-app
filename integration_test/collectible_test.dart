@@ -33,7 +33,7 @@ void main() {
 
       await $(K.collectible(WonderType.chichenItza, 0))
           .scrollTo(
-            scrollable: $(PageStorageKey('editorial')).$(Scrollable),
+            view: $(PageStorageKey('editorial')).$(Scrollable),
             settlePolicy: SettlePolicy.noSettle,
           )
           .tap(
