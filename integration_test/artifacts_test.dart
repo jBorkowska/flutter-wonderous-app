@@ -33,7 +33,7 @@ void main() {
       await $(K.artifactsSectionButton).tap(settlePolicy: SettlePolicy.trySettle);
       await $(K.artifact('Head of a Rain God'))
           .scrollTo(
-            scrollable: $(PageView).$(Scrollable),
+            view: $(PageView).$(Scrollable),
             step: 100,
             settlePolicy: SettlePolicy.trySettle,
           )
