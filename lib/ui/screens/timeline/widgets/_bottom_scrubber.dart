@@ -80,6 +80,7 @@ class _BottomScrubber extends StatelessWidget {
                       child: Align(
                         alignment: scrubberAlign,
                         child: FractionallySizedBox(
+                          key: K.box,
                           widthFactor: viewPortFraction,
                           heightFactor: 1,
                           child: _buildOutlineBox(context, scrubberAlign),

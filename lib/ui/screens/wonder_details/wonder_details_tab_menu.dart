@@ -127,6 +127,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               mainAxisSize: tabBtnSize,
                             ),
                             _TabBtn(
+                              key: K.timelineButton,
                               3,
                               tabController,
                               iconImg: 'timeline',

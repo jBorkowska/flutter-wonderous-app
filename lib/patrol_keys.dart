@@ -10,6 +10,8 @@ class PatrolKeys {
   static const wonderHomeButton = Key('wonderHomeButton');
   static const photosSectionButton = Key('photosSectionButton');
   static const artifactsSectionButton = Key('artifactsSectionButton');
+  static const timelineButton = Key('timelineButton');
+  static const box = Key('box');
 
   static Key wonderScreen(WonderType type) => Key(type.name);
   static Key collectible(WonderType type, int index) => Key('${type.name}_$index');

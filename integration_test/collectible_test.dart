@@ -10,26 +10,16 @@ void main() {
     'discover pendant collectible in chichen itza',
     nativeAutomation: true,
     framePolicy: LiveTestWidgetsFlutterBindingFramePolicy.benchmarkLive,
-    config: PatrolTesterConfig(settleTimeout: Duration(seconds: 3)),
+    config: PatrolTesterConfig(
+      settleTimeout: Duration(seconds: 3),
+      settlePolicy: SettlePolicy.trySettle,
+    ),
     ($) async {
       await runWonderous($: $);
 
-      await $(K.finishIntroButton)
-          .which<AnimatedOpacity>(
-            (button) => button.opacity == 1,
-          )
-          .$(CircleIconBtn)
-          .scrollTo(step: 300)
-          .tap();
-      await $(K.hamburgerMenuButton).waitUntilVisible();
+      await onboarding($: $);
 
-      await $(K.wonderScreen(WonderType.chichenItza))
-          .scrollTo(
-            step: 300,
-          )
-          .tap(
-            settlePolicy: SettlePolicy.trySettle,
-          );
+      await openChitchenItza($: $);
 
       await $(K.collectible(WonderType.chichenItza, 0))
           .scrollTo(
@@ -40,10 +30,27 @@ void main() {
             settlePolicy: SettlePolicy.trySettle,
           );
       await $('VIEW IN MY COLLECTION').tap();
-      await $(K.collectibleDetails(WonderType.chichenItza, 'Pendant')).tap(
+      await $(
+        K.collectibleDetails(WonderType.chichenItza, 'Pendant'),
+      ).tap(
         settleTimeout: Duration(seconds: 10),
       );
       await $('Pendant').waitUntilVisible();
+
+      await $(K.hamburgerMenuButton).tap();
+      await $(K.hamburgerMenuButton).tap();
+
+      await $(K.timelineButton).tap(
+        settlePolicy: SettlePolicy.trySettle,
+      );
+
+      await $('OPEN GLOBAL TIMELINE').tap();
+
+      await $('Modern Era').scrollTo(
+        view: $(K.box),
+        scrollDirection: AxisDirection.left,
+        step: 32,
+      );
     },
   );
 }
